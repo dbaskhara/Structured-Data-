@@ -1,0 +1,123 @@
+#include <iostream>
+using namespace std;
+
+struct node
+{
+	int point;
+	node *next;
+};
+node *first = new node;
+node *last = new node;
+
+void add(int a)
+{
+	node *temp = new node;
+	temp -> point = a;
+	if(first == NULL)
+	{
+		first = temp;
+		last = temp;
+		first -> next = NULL;
+	}
+	else
+	{
+		if(a < first -> point)
+		{
+			temp -> next = first;
+			first = temp;
+		}
+		else if(a > last -> point)
+		{
+			last -> next = temp;
+			last = temp;
+			last -> next = NULL;
+		}
+		else
+		{
+			node *check = new node;
+			check = first;
+			while(check -> next -> point < a)
+			{
+				check = check -> next;
+			}
+			temp -> next = check -> next;
+			check -> next = temp;
+		}
+	}
+}
+
+void list()
+{
+	node *temp = new node;
+	temp = NULL;
+	first = temp;
+	last = temp;
+}
+
+void del(int a)
+{
+	if(first == last)
+	{
+		list();
+	}
+	else
+	{
+		if(a == first -> point)
+		{
+			first = first -> next;
+		}
+		else if(a == last -> point)
+		{
+			node *check = new node;
+			check = first;
+			while(check -> next -> point != a)
+			{
+				check = check -> next;
+			}
+			last = check;
+			last -> next = NULL;
+		}
+		else
+		{
+			node *check = new node;
+			check = first;
+			while(check -> next -> point != a)
+			{
+				check = check -> next;
+			}
+			check -> next = check -> next -> next;
+		}
+	}
+}
+
+void check()
+{
+	node *temp = new node;
+	temp = first;
+	while(temp != NULL)
+	{
+		cout << temp -> point << ends;
+		temp = temp -> next;
+	}
+}
+
+
+int main()
+{
+	list();	
+	add(10);
+	add(5);
+	add(1);
+	add(12);
+	add(15);
+	add(2);
+	add(7);
+	add(14);
+	add(11);
+	check();
+	cout << endl << endl;
+	del(1);
+	del(15);
+	del(10);
+	check();
+}
