@@ -1,0 +1,48 @@
+#include <iostream>
+using namespace std;
+
+struct node
+{
+	int point;
+}stack[100];
+
+void list()
+{
+	stack[0].point = 0;
+}
+
+void pop()
+{
+	stack[0].point--;
+}
+
+void push(int a)
+{
+	stack[0].point++;
+	stack[stack[0].point].point = a;
+}
+
+void check()
+{
+	for(int a = 1 ; a <= stack[0].point ; a++)
+	{
+		cout << stack[a].point << ends;
+	}
+}
+
+int main()
+{
+	list();	
+	push(10);
+	push(30);
+	push(5);
+	push(20);
+	push(25);
+	push(1);
+	check();
+	cout << endl << endl;
+	pop();
+	pop();
+	pop();
+	check();
+}
