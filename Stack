@@ -1,48 +1,150 @@
 #include <iostream>
+#define max 5
 using namespace std;
 
 struct node
 {
-	int point;
-}stack[100];
+	int point[max];
+	int top;
+};
+node *s = new node;
 
-void list()
+class stack
 {
-	stack[0].point = 0;
-}
-
-void pop()
-{
-	stack[0].point--;
-}
-
-void push(int a)
-{
-	stack[0].point++;
-	stack[stack[0].point].point = a;
-}
-
-void check()
-{
-	for(int a = 1 ; a <= stack[0].point ; a++)
+public:
+	list()
 	{
-		cout << stack[a].point << ends;
+		s -> top = 0;
 	}
-}
+	pop()
+	{
+		s -> top--;
+	}
+	push(int a)
+	{
+		s -> top++;
+		s -> point[s -> top] = a;
+	}
+	check()
+	{
+		cout << endl << endl;
+		for(int a = 1 ; a <= s-> top ; a++)
+		{
+			cout << s -> point[a] << ends;
+		}
+		cout << endl << endl;
+		system("pause");
+	}	
+	stack()
+	{
+		list();
+		while(true)
+		{
+			begin:
+			system("cls");
+			cout << "MENU STACK\n";
+			cout << "1.Tambah Data\n";
+			cout << "2.Tambah Banyak Data\n";
+			cout << "3.Hapus Data\n";
+			cout << "4.Hapus Banyak Data\n";
+			cout << "5.Lihat Data\n";
+			cout << "0.Keluar\n";
+			cin >> pilihan;
+			switch(pilihan)
+			{
+				case 1:
+					if(s -> top == max)
+					{
+						cout << "\n\nStack Overflow\n\n";
+						system("pause");
+						goto begin;
+					}
+					cout << "\nMasukkan Nilai : ";
+					cin >> nilai;
+					push(nilai);
+					break;
+				case 2:
+					if(s -> top == max)
+					{
+						cout << "\n\nStack Overflow\n\n";
+						system("pause");
+						goto begin;
+					}
+					cout << "\nJumlah Data : ";
+					cin >> jumlah;
+					for(int i = 1 ; i <= jumlah ; i++)
+					{
+						if(s -> top >= max)
+						{
+							cout << "\n\nStack Overflow\n\n";
+							system("pause");
+							goto begin;
+						}
+						cout << "\nMasukkan Nilai ke " << i << ": ";
+						cin >> nilai;
+						push(nilai);
+					}
+					break;
+				case 3:
+					if(s -> top == 0)
+					{
+						cout << "\n\nStack Underflow\n\n";
+						system("pause");
+						goto begin;
+					}
+					pop();
+					break;
+				case 4:
+					if(s -> top == 0)
+					{
+						cout << "\n\nStack Underflow\n\n";
+						system("pause");
+						goto begin;
+					}
+					cout << "\nJumlah Data : ";
+					cin >> jumlah;
+					if(jumlah >= max)
+					{
+						list();
+					}
+					else
+					{
+						for(int i = 1 ; i <= jumlah ; i++)
+						{
+							pop();
+						}	
+					}
+					break;
+				case 5:
+					if(s -> top == 0)
+					{
+						cout << "\n\nStack Kosong\n\n";
+						system("pause");
+						goto begin;
+					}
+					check();
+					break;
+				case 0:
+					goto end;
+					break;
+			}
+		}
+		end:
+		true;
+	}
+	~stack()
+	{
+		cout << "\n\nStack Selesai\n\n";
+		system("pause");
+	}
+private:
+	int pilihan;
+	int nilai;
+	int jumlah;
+};
 
 int main()
 {
-	list();	
-	push(10);
-	push(30);
-	push(5);
-	push(20);
-	push(25);
-	push(1);
-	check();
-	cout << endl << endl;
-	pop();
-	pop();
-	pop();
-	check();
+	stack *s = new stack;
+	delete s;
 }
