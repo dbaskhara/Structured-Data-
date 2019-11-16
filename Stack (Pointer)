@@ -4,33 +4,54 @@ using namespace std;
 
 struct nodestack
 {
-	int point[max];
-	int top;
+	int point;
+	nodestack *next;
 };
-nodestack *s = new nodestack;
+nodestack *firststack = new nodestack;
+nodestack *laststack = new nodestack;
 
 class stack
 {
 public:
 	list()
 	{
-		s -> top = 0;
+		nodestack *temp = new nodestack;
+		temp = NULL;
+		firststack = temp;
+		laststack = temp;
+		top = 0;
 	}
 	pop()
 	{
-		s -> top--;
+		top--;
 	}
 	push(int a)
 	{
-		s -> top++;
-		s -> point[s -> top] = a;
+		top++;
+		nodestack *temp = new nodestack;
+		temp -> point = a;
+		if(top == 1)
+		{
+			firststack = temp;
+			laststack = temp;
+			firststack -> next = NULL;
+		}
+		else
+		{
+			laststack -> next = temp;
+			laststack = temp;
+			laststack -> next = NULL;
+		}
 	}
 	check()
 	{
+		nodestack *bantu = new nodestack;
+		bantu = firststack;
 		cout << endl << endl;
-		for(int a = 1 ; a <= s-> top ; a++)
+		for(int a = 1 ; a <= top ; a++)
 		{
-			cout << s -> point[a] << ends;
+			cout << bantu -> point << ends;
+			bantu = bantu -> next;
 		}
 		cout << endl << endl;
 		system("pause");
@@ -53,7 +74,7 @@ public:
 			switch(pilihan)
 			{
 				case 1:
-					if(s -> top == max)
+					if(top == max)
 					{
 						cout << "\n\nStack Overflow\n\n";
 						system("pause");
@@ -64,7 +85,7 @@ public:
 					push(nilai);
 					break;
 				case 2:
-					if(s -> top == max)
+					if(top == max)
 					{
 						cout << "\n\nStack Overflow\n\n";
 						system("pause");
@@ -74,7 +95,7 @@ public:
 					cin >> jumlah;
 					for(int i = 1 ; i <= jumlah ; i++)
 					{
-						if(s -> top >= max)
+						if(top >= max)
 						{
 							cout << "\n\nStack Overflow\n\n";
 							system("pause");
@@ -86,7 +107,7 @@ public:
 					}
 					break;
 				case 3:
-					if(s -> top == 0)
+					if(top == 0)
 					{
 						cout << "\n\nStack Underflow\n\n";
 						system("pause");
@@ -95,7 +116,7 @@ public:
 					pop();
 					break;
 				case 4:
-					if(s -> top == 0)
+					if(top == 0)
 					{
 						cout << "\n\nStack Underflow\n\n";
 						system("pause");
@@ -116,7 +137,7 @@ public:
 					}
 					break;
 				case 5:
-					if(s -> top == 0)
+					if(top == 0)
 					{
 						cout << "\n\nStack Kosong\n\n";
 						system("pause");
@@ -141,6 +162,7 @@ private:
 	int pilihan;
 	int nilai;
 	int jumlah;
+	int top;
 };
 
 int main()
