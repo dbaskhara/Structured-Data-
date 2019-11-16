@@ -1,123 +1,206 @@
 #include <iostream>
 using namespace std;
 
-struct node
+struct nodelinkedlist
 {
 	int point;
-	node *next;
+	nodelinkedlist *next;
 };
-node *first = new node;
-node *last = new node;
+nodelinkedlist *firstlinkedlist = new nodelinkedlist;
+nodelinkedlist *lastlinkedlist = new nodelinkedlist;
 
-void add(int a)
+class linkedlist
 {
-	node *temp = new node;
-	temp -> point = a;
-	if(first == NULL)
+public:
+	add(int a)
 	{
-		first = temp;
-		last = temp;
-		first -> next = NULL;
-	}
-	else
-	{
-		if(a < first -> point)
+		nodelinkedlist *temp = new nodelinkedlist;
+		temp -> point = a;
+		if(firstlinkedlist == NULL)
 		{
-			temp -> next = first;
-			first = temp;
-		}
-		else if(a > last -> point)
-		{
-			last -> next = temp;
-			last = temp;
-			last -> next = NULL;
+			firstlinkedlist = temp;
+			lastlinkedlist = temp;
+			firstlinkedlist -> next = NULL;
 		}
 		else
 		{
-			node *check = new node;
-			check = first;
-			while(check -> next -> point < a)
+			if(a < firstlinkedlist -> point)
 			{
-				check = check -> next;
+				temp -> next = firstlinkedlist;
+				firstlinkedlist = temp;
 			}
-			temp -> next = check -> next;
-			check -> next = temp;
+			else if(a > lastlinkedlist -> point)
+			{
+				lastlinkedlist -> next = temp;
+				lastlinkedlist = temp;
+				lastlinkedlist -> next = NULL;
+			}
+			else
+			{
+				nodelinkedlist *check = new nodelinkedlist;
+				check = firstlinkedlist;
+				while(check -> next -> point < a)
+				{
+					check = check -> next;
+				}
+				temp -> next = check -> next;
+				check -> next = temp;
+			}
 		}
 	}
-}
-
-void list()
-{
-	node *temp = new node;
-	temp = NULL;
-	first = temp;
-	last = temp;
-}
-
-void del(int a)
-{
-	if(first == last)
+	list()
+	{
+		nodelinkedlist *temp = new nodelinkedlist;
+		temp = NULL;
+		firstlinkedlist = temp;
+		lastlinkedlist = temp;
+	}
+	del(int a)
+	{
+		if(firstlinkedlist == lastlinkedlist)
+		{
+			list();
+		}
+		else
+		{
+			if(a == firstlinkedlist -> point)
+			{
+				firstlinkedlist = firstlinkedlist -> next;
+			}
+			else if(a == lastlinkedlist -> point)
+			{
+				nodelinkedlist *check = new nodelinkedlist;
+				check = firstlinkedlist;
+				while(check -> next -> point != a)
+				{
+					check = check -> next;
+				}
+				lastlinkedlist = check;
+				lastlinkedlist -> next = NULL;
+			}
+			else
+			{
+				nodelinkedlist *check = new nodelinkedlist;
+				check = firstlinkedlist;
+				while(check -> next -> point != a && check -> next != lastlinkedlist)
+				{
+					check = check -> next;
+				}
+				if(check -> next == lastlinkedlist)
+				{
+					cout << "\n\nData Tidak Ditemukan\n\n";
+					cout << endl << endl;
+					system("pause");
+				}
+				else
+				{
+					check -> next = check -> next -> next;
+				}
+			}
+		}
+	}
+	check()
+	{
+		cout << endl << endl;
+		nodelinkedlist *temp = new nodelinkedlist;
+		temp = firstlinkedlist;
+		while(temp != NULL)
+		{
+			cout << temp -> point << ends;
+			temp = temp -> next;
+		}
+		cout << endl << endl;
+		system("pause");
+	}	
+	linkedlist()
 	{
 		list();
-	}
-	else
-	{
-		if(a == first -> point)
+		while(true)
 		{
-			first = first -> next;
-		}
-		else if(a == last -> point)
-		{
-			node *check = new node;
-			check = first;
-			while(check -> next -> point != a)
+			begin:
+			system("cls");
+			cout << "MENU LINKEDLIST\n";
+			cout << "1.Tambah Data\n";
+			cout << "2.Tambah Banyak Data\n";
+			cout << "3.Hapus Data\n";
+			cout << "4.Hapus Banyak Data\n";
+			cout << "5.Lihat Data\n";
+			cout << "0.Keluar\n";
+			cin >> pilihan;
+			switch(pilihan)
 			{
-				check = check -> next;
+				case 1:
+					cout << "\nMasukkan Nilai : ";
+					cin >> nilai;
+					add(nilai);
+					break;
+				case 2:
+					cout << "\nJumlah Data : ";
+					cin >> jumlah;
+					for(int i = 1 ; i <= jumlah ; i++)
+					{
+						cout << "\nMasukkan Nilai ke " << i << ": ";
+						cin >> nilai;
+						add(nilai);	
+					}
+					break;
+				case 3:
+					if(firstlinkedlist == NULL)
+					{
+						cout << "\n\nLinkedList Kosong\n\n";
+						system("pause");
+						goto begin;
+					}
+					cout << "\nMasukkan Nilai : ";
+					cin >> nilai;
+					del(nilai);
+					break;
+				case 4:
+					if(firstlinkedlist == NULL)
+					{
+						cout << "\n\nLinkedList Kosong\n\n";
+						system("pause");
+						goto begin;
+					}
+					cout << "\nJumlah Data : ";
+					cin >> jumlah;
+					for(int i = 1 ; i <= jumlah ; i++)
+					{
+						cout << "\nMasukkan Nilai ke " << i << ": ";
+						cin >> nilai;
+						del(nilai);	
+					}
+					break;
+				case 5:
+					if(firstlinkedlist == NULL)
+					{
+						cout << "\n\nLinkedList Kosong\n\n";
+						system("pause");
+						goto begin;
+					}
+					check();
+					break;
+				case 0:
+					goto end;
+					break;
 			}
-			last = check;
-			last -> next = NULL;
 		}
-		else
-		{
-			node *check = new node;
-			check = first;
-			while(check -> next -> point != a)
-			{
-				check = check -> next;
-			}
-			check -> next = check -> next -> next;
-		}
+		end:
+		true;
 	}
-}
-
-void check()
-{
-	node *temp = new node;
-	temp = first;
-	while(temp != NULL)
+	~linkedlist()
 	{
-		cout << temp -> point << ends;
-		temp = temp -> next;
+		cout << "\n\nLinkedList Selesai\n\n";
+		system("pause");
 	}
-}
-
+private:
+	int pilihan;
+	int nilai;
+	int jumlah;
+};
 
 int main()
 {
-	list();	
-	add(10);
-	add(5);
-	add(1);
-	add(12);
-	add(15);
-	add(2);
-	add(7);
-	add(14);
-	add(11);
-	check();
-	cout << endl << endl;
-	del(1);
-	del(15);
-	del(10);
-	check();
+	linkedlist *ll = new linkedlist;
+	delete ll;
 }
