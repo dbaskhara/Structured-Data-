@@ -1,0 +1,184 @@
+#include <iostream>
+#define max 5
+using namespace std;
+
+struct nodequeue
+{
+	int point;
+	nodequeue *next;
+};
+nodequeue *firstqueue = new nodequeue;
+nodequeue *lastqueue = new nodequeue;
+
+class queue
+{
+public:
+	list()
+	{
+		nodequeue *temp = new nodequeue;
+		temp = NULL;
+		firstqueue = temp;
+		lastqueue = temp;
+		top = 0;
+	}
+	pop()
+	{
+		top--;
+		if(top == 0)
+		{
+			list();
+		}
+		else if(top == 1)
+		{
+			firstqueue = lastqueue;
+		}
+		else
+		{
+			firstqueue = firstqueue -> next;
+		}
+	}
+	push(int a)
+	{
+		top++;
+		nodequeue *temp = new nodequeue;
+		temp -> point = a;
+		if(top == 1)
+		{
+			firstqueue = temp;
+			lastqueue = temp;
+			firstqueue -> next = NULL;
+		}
+		else
+		{
+			lastqueue -> next = temp;
+			lastqueue = temp;
+			lastqueue -> next = NULL;
+		}
+	}
+	check()
+	{
+		nodequeue *bantu = new nodequeue;
+		bantu = firstqueue;
+		cout << endl << endl;
+		for(int a = 1 ; a <= top ; a++)
+		{
+			cout << bantu -> point << ends;
+			bantu = bantu -> next;
+		}
+		cout << endl << endl;
+		system("pause");
+	}	
+	queue()
+	{
+		list();
+		while(true)
+		{
+			begin:
+			system("cls");
+			cout << "MENU STACK\n";
+			cout << "1.Tambah Data\n";
+			cout << "2.Tambah Banyak Data\n";
+			cout << "3.Hapus Data\n";
+			cout << "4.Hapus Banyak Data\n";
+			cout << "5.Lihat Data\n";
+			cout << "0.Keluar\n";
+			cin >> pilihan;
+			switch(pilihan)
+			{
+				case 1:
+					if(top == max)
+					{
+						cout << "\n\nQueue Penuh\n\n";
+						system("pause");
+						goto begin;
+					}
+					cout << "\nMasukkan Nilai : ";
+					cin >> nilai;
+					push(nilai);
+					break;
+				case 2:
+					if(top == max)
+					{
+						cout << "\n\nQueue Penuh\n\n";
+						system("pause");
+						goto begin;
+					}
+					cout << "\nJumlah Data : ";
+					cin >> jumlah;
+					for(int i = 1 ; i <= jumlah ; i++)
+					{
+						if(top >= max)
+						{
+							cout << "\n\nQueue Penuh\n\n";
+							system("pause");
+							goto begin;
+						}
+						cout << "\nMasukkan Nilai ke " << i << ": ";
+						cin >> nilai;
+						push(nilai);
+					}
+					break;
+				case 3:
+					if(top == 0)
+					{
+						cout << "\n\nQueue Kosong\n\n";
+						system("pause");
+						goto begin;
+					}
+					pop();
+					break;
+				case 4:
+					if(top == 0)
+					{
+						cout << "\n\nQueue Kosong\n\n";
+						system("pause");
+						goto begin;
+					}
+					cout << "\nJumlah Data : ";
+					cin >> jumlah;
+					if(jumlah >= top)
+					{
+						list();
+					}
+					else
+					{
+						for(int i = 1 ; i <= jumlah ; i++)
+						{
+							pop();
+						}	
+					}
+					break;
+				case 5:
+					if(top == 0)
+					{
+						cout << "\n\nStack Kosong\n\n";
+						system("pause");
+						goto begin;
+					}
+					check();
+					break;
+				case 0:
+					goto end;
+					break;
+			}
+		}
+		end:
+		true;
+	}
+	~queue()
+	{
+		cout << "\n\nQueue Selesai\n\n";
+		system("pause");
+	}
+private:
+	int pilihan;
+	int nilai;
+	int jumlah;
+	int top;
+};
+
+int main()
+{
+	queue *q = new queue;
+	delete q;
+}
