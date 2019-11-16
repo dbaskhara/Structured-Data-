@@ -2,12 +2,12 @@
 #define max 5
 using namespace std;
 
-struct node
+struct nodestack
 {
 	int point[max];
 	int top;
 };
-node *s = new node;
+nodestack *s = new nodestack;
 
 class stack
 {
