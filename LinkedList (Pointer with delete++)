@@ -1,0 +1,308 @@
+#include <iostream>
+using namespace std;
+
+struct nodehapus
+{
+	int point;
+	nodehapus *next;
+};
+nodehapus *firsthapus = new nodehapus;
+nodehapus *lasthapus = new nodehapus;
+
+struct nodelinkedlist
+{
+	int point;
+	nodelinkedlist *next;
+};
+nodelinkedlist *firstlinkedlist = new nodelinkedlist;
+nodelinkedlist *lastlinkedlist = new nodelinkedlist;
+
+class linkedlist
+{
+public:
+	add(int a)
+	{
+		nodelinkedlist *temp = new nodelinkedlist;
+		temp -> point = a;
+		if(firstlinkedlist == NULL)
+		{
+			firstlinkedlist = temp;
+			lastlinkedlist = temp;
+			firstlinkedlist -> next = NULL;
+		}
+		else
+		{
+			if(a < firstlinkedlist -> point)
+			{
+				temp -> next = firstlinkedlist;
+				firstlinkedlist = temp;
+			}
+			else if(a > lastlinkedlist -> point)
+			{
+				lastlinkedlist -> next = temp;
+				lastlinkedlist = temp;
+				lastlinkedlist -> next = NULL;
+			}
+			else
+			{
+				nodelinkedlist *check = new nodelinkedlist;
+				check = firstlinkedlist;
+				while(check -> next -> point < a)
+				{
+					check = check -> next;
+				}
+				temp -> next = check -> next;
+				check -> next = temp;
+			}
+		}
+	}
+	list()
+	{
+		nodelinkedlist *temp = new nodelinkedlist;
+		temp = NULL;
+		firstlinkedlist = temp;
+		lastlinkedlist = temp;
+	}
+	listhapus()
+	{
+		nodehapus *temp = new nodehapus;
+		temp = NULL;
+		firsthapus = temp;
+		lasthapus = temp;
+	}
+	del(int a)
+	{
+		if(firstlinkedlist == lastlinkedlist)
+		{
+			list();
+		}
+		else
+		{
+			if(a == firstlinkedlist -> point)
+			{
+				firstlinkedlist = firstlinkedlist -> next;
+				if(firsthapus == NULL)
+				{
+					nodehapus *temp = new nodehapus;
+					temp -> point = a;
+					firsthapus = temp;
+					lasthapus = temp;
+					firsthapus -> next = NULL;
+				}
+				else
+				{
+					nodehapus *temp = new nodehapus;
+					temp -> point = a;
+					lasthapus -> next = temp;
+					lasthapus = temp;
+					lasthapus -> next = NULL;
+				}
+			}
+			else if(a == lastlinkedlist -> point)
+			{
+				nodelinkedlist *check = new nodelinkedlist;
+				check = firstlinkedlist;
+				while(check -> next -> point != a)
+				{
+					check = check -> next;
+				}
+				lastlinkedlist = check;
+				lastlinkedlist -> next = NULL;
+				if(firsthapus == NULL)
+				{
+					nodehapus *temp = new nodehapus;
+					temp -> point = a;
+					firsthapus = temp;
+					lasthapus = temp;
+					firsthapus -> next = NULL;
+				}
+				else
+				{
+					nodehapus *temp = new nodehapus;
+					temp -> point = a;
+					lasthapus -> next = temp;
+					lasthapus = temp;
+					lasthapus -> next = NULL;
+				}
+			}
+			else
+			{
+				nodelinkedlist *check = new nodelinkedlist;
+				check = firstlinkedlist;
+				while(check -> next -> point != a && check -> next != lastlinkedlist)
+				{
+					check = check -> next;
+				}
+				if(check -> next == lastlinkedlist)
+				{
+					cout << "\n\nData Tidak Ditemukan\n\n";
+					cout << endl << endl;
+					system("pause");
+				}
+				else
+				{
+					check -> next = check -> next -> next;
+					if(firsthapus == NULL)
+					{
+						nodehapus *temp = new nodehapus;
+						temp -> point = a;
+						firsthapus = temp;
+						lasthapus = temp;
+						firsthapus -> next = NULL;
+					}
+					else
+					{
+						nodehapus *temp = new nodehapus;
+						temp -> point = a;
+						lasthapus -> next = temp;
+						lasthapus = temp;
+						lasthapus -> next = NULL;
+					}
+				}
+			}
+		}
+	}
+	check()
+	{
+		cout << endl << endl;
+		nodelinkedlist *temp = new nodelinkedlist;
+		temp = firstlinkedlist;
+		while(temp != NULL)
+		{
+			cout << temp -> point << ends;
+			temp = temp -> next;
+		}
+		cout << endl << endl;
+		system("pause");
+	}	
+	checkhapus()
+	{
+		cout << endl << endl;
+		nodehapus *temp = new nodehapus;
+		temp = firsthapus;
+		while(temp != NULL)
+		{
+			cout << temp -> point << ends;
+			temp = temp -> next;
+		}
+		cout << endl << endl;
+		cout << "Apakah Ingin mengembalikan data : ";
+		cin >> history;
+		switch(history)
+		{
+			case 'y':
+				cout << "Data dengan nilai ";
+				cin >> nilai;
+				add(nilai);
+				break;
+		}
+		system("pause");
+	}	
+	linkedlist()
+	{
+		list();
+		listhapus();
+		while(true)
+		{
+			begin:
+			system("cls");
+			cout << "MENU LINKEDLIST\n";
+			cout << "1.Tambah Data\n";
+			cout << "2.Tambah Banyak Data\n";
+			cout << "3.Hapus Data\n";
+			cout << "4.Hapus Banyak Data\n";
+			cout << "5.Lihat Data\n";
+			if(firsthapus != NULL)
+			{
+				cout << "6.Lihat History Penghapusan\n";		
+			}
+			cout << "0.Keluar\n";
+			cin >> pilihan;
+			switch(pilihan)
+			{
+				case 1:
+				cout << "\nMasukkan Nilai : ";
+				cin >> nilai;
+				add(nilai);
+				break;
+				case 2:
+				cout << "\nJumlah Data : ";
+				cin >> jumlah;
+				for(int i = 1 ; i <= jumlah ; i++)
+				{
+					cout << "\nMasukkan Nilai ke " << i << ": ";
+					cin >> nilai;
+					add(nilai);	
+				}
+				break;
+				case 3:
+				if(firstlinkedlist == NULL)
+				{
+					cout << "\n\nLinkedList Kosong\n\n";
+					system("pause");
+					goto begin;
+				}
+				cout << "\nMasukkan Nilai : ";
+				cin >> nilai;
+				del(nilai);
+				break;
+				case 4:
+				if(firstlinkedlist == NULL)
+				{
+					cout << "\n\nLinkedList Kosong\n\n";
+					system("pause");
+					goto begin;
+				}
+				cout << "\nJumlah Data : ";
+				cin >> jumlah;
+				for(int i = 1 ; i <= jumlah ; i++)
+				{
+					cout << "\nMasukkan Nilai ke " << i << ": ";
+					cin >> nilai;
+					del(nilai);	
+				}
+				break;
+				case 5:
+				if(firstlinkedlist == NULL)
+				{
+					cout << "\n\nLinkedList Kosong\n\n";
+					system("pause");
+					goto begin;
+				}
+				check();
+				break;
+				case 6:
+				if(firsthapus == NULL)
+				{
+					cout << "\n\nLinkedList Hapus Kosong\n\n";
+					system("pause");
+					goto begin;
+				}
+				checkhapus();
+				break;
+
+				case 0:
+				goto end;
+				break;
+			}
+		}
+		end:
+		true;
+	}
+	~linkedlist()
+	{
+		cout << "\n\nLinkedList Selesai\n\n";
+		system("pause");
+	}
+private:
+	int pilihan;
+	int nilai;
+	int jumlah;
+	char history;
+};
+
+int main()
+{
+	linkedlist *ll = new linkedlist;
+	delete ll;
+}
