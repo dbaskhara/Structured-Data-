@@ -75,7 +75,7 @@ public:
 		{
 			begin:
 			system("cls");
-			cout << "MENU STACK\n";
+			cout << "MENU QUEUE\n";
 			cout << "1.Tambah Data\n";
 			cout << "2.Tambah Banyak Data\n";
 			cout << "3.Hapus Data\n";
