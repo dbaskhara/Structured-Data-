@@ -95,7 +95,7 @@ public:
 					cin >> jumlah;
 					for(int i = 1 ; i <= jumlah ; i++)
 					{
-						if(top >= top)
+						if(top >= max)
 						{
 							cout << "\n\nStack Overflow\n\n";
 							system("pause");
