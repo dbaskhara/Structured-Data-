@@ -1,0 +1,254 @@
+#include <iostream>
+#define max 5
+using namespace std;
+
+struct nodehapus
+{
+	int point;
+	nodehapus *next;
+};
+nodehapus *firsthapus = new nodehapus;
+nodehapus *lasthapus = new nodehapus;
+
+struct nodestack
+{
+	int point;
+	nodestack *next;
+};
+nodestack *firststack = new nodestack;
+nodestack *laststack = new nodestack;
+
+class stack
+{
+public:
+	listhapus()
+	{
+		nodehapus *temp = new nodehapus;
+		temp = NULL;
+		firsthapus = temp;
+		lasthapus = temp;
+	}
+	list()
+	{
+		nodestack *temp = new nodestack;
+		temp = NULL;
+		firststack = temp;
+		laststack = temp;
+		top = 0;
+	}
+	pop()
+	{
+		if(firsthapus == NULL)
+		{
+			nodehapus *temp = new nodehapus;
+			temp -> point = laststack -> point;
+			firsthapus = temp;
+			lasthapus = temp;
+			firsthapus -> next = NULL;
+			
+		}
+		else
+		{
+			nodehapus *temp = new nodehapus;
+			temp -> point = laststack -> point;
+			lasthapus -> next = temp;
+			lasthapus = temp;
+			lasthapus -> next = NULL;
+		}
+		top--;
+		if(top != 0)
+		{
+			nodestack *bantu = new nodestack;
+			bantu = firststack;
+			for(int i = 1 ; i < top ; i++)
+			{
+				bantu = bantu -> next;
+			}
+			laststack = bantu;
+			laststack -> next = NULL;
+		}
+	}
+	push(int a)
+	{
+		top++;
+		nodestack *temp = new nodestack;
+		temp -> point = a;
+		if(top == 1)
+		{
+			firststack = temp;
+			laststack = temp;
+			firststack -> next = NULL;
+		}
+		else
+		{
+			laststack -> next = temp;
+			laststack = temp;
+			laststack -> next = NULL;
+		}
+	}
+	check()
+	{
+		nodestack *bantu = new nodestack;
+		bantu = firststack;
+		cout << endl << endl;
+		for(int a = 1 ; a <= top ; a++)
+		{
+			cout << bantu -> point << ends;
+			bantu = bantu -> next;
+		}
+		cout << endl << endl;
+		system("pause");
+	}	
+	
+	checkhapus()
+	{
+		cout << endl << endl;
+		nodehapus *temp = new nodehapus;
+		temp = firsthapus;
+		while(temp != NULL)
+		{
+			cout << temp -> point << ends;
+			temp = temp -> next;
+		}
+		cout << endl << endl;
+		cout << "Apakah Ingin mengembalikan data : ";
+		cin >> history;
+		switch(history)
+		{
+			case 'y':
+			cout << "Data dengan nilai ";
+			cin >> nilai;
+			push(nilai);
+			break;
+		}
+		system("pause");
+	}	
+	stack()
+	{
+		list();
+		listhapus();
+		while(true)
+		{
+			begin:
+			system("cls");
+			cout << "MENU STACK\n";
+			cout << "1.Tambah Data\n";
+			cout << "2.Tambah Banyak Data\n";
+			cout << "3.Hapus Data\n";
+			cout << "4.Hapus Banyak Data\n";
+			cout << "5.Lihat Data\n";
+			if(firsthapus != NULL)
+			{
+				cout << "6.Lihat History Penghapusan\n";		
+			}
+			cout << "0.Keluar\n";
+			cin >> pilihan;
+			switch(pilihan)
+			{
+				case 1:
+				if(top == max)
+				{
+					cout << "\n\nStack Overflow\n\n";
+					system("pause");
+					goto begin;
+				}
+				cout << "\nMasukkan Nilai : ";
+				cin >> nilai;
+				push(nilai);
+				break;
+				case 2:
+				if(top == max)
+				{
+					cout << "\n\nStack Overflow\n\n";
+					system("pause");
+					goto begin;
+				}
+				cout << "\nJumlah Data : ";
+				cin >> jumlah;
+				for(int i = 1 ; i <= jumlah ; i++)
+				{
+					if(top >= max)
+					{
+						cout << "\n\nStack Overflow\n\n";
+						system("pause");
+						goto begin;
+					}
+					cout << "\nMasukkan Nilai ke " << i << ": ";
+					cin >> nilai;
+					push(nilai);
+				}
+				break;
+				case 3:
+				if(top == 0)
+				{
+					cout << "\n\nStack Underflow\n\n";
+					system("pause");
+					goto begin;
+				}
+				pop();
+				break;
+				case 4:
+				if(top == 0)
+				{
+					cout << "\n\nStack Underflow\n\n";
+					system("pause");
+					goto begin;
+				}
+				cout << "\nJumlah Data : ";
+				cin >> jumlah;
+				if(jumlah >= max)
+				{
+					list();
+				}
+				else
+				{
+					for(int i = 1 ; i <= jumlah ; i++)
+					{
+						pop();
+					}	
+				}
+				break;
+				case 5:
+				if(top == 0)
+				{
+					cout << "\n\nStack Kosong\n\n";
+					system("pause");
+					goto begin;
+				}
+				check();
+				break;
+				case 6:
+				if(firsthapus == NULL)
+				{
+					cout << "\n\nLinkedList Hapus Kosong\n\n";
+					system("pause");
+					goto begin;
+				}
+				checkhapus();
+				break;
+				case 0:
+				goto end;
+				break;
+			}
+		}
+		end:
+		true;
+	}
+	~stack()
+	{
+		cout << "\n\nStack Selesai\n\n";
+		system("pause");
+	}
+private:
+	int pilihan;
+	int nilai;
+	int jumlah;
+	int top;
+	char history;
+};
+
+int main()
+{
+	stack *s = new stack;
+	delete s;
+}
