@@ -1,0 +1,258 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+struct pasien
+{
+	string nama;
+	int umur;
+	int nik;
+	int prioritas;
+	pasien *next;
+};
+pasien *awal = new pasien;
+pasien *akhir = new pasien;
+pasien *awalq = new pasien;
+pasien *akhirq = new pasien;
+pasien *awals = new pasien;
+pasien *akhirs = new pasien;
+
+void listll()
+{
+	pasien *temp = new pasien;
+	temp = NULL;
+	awal = temp;
+	akhir = temp;
+}
+void listq()
+{
+	pasien *temp = new pasien;
+	temp = NULL;
+	awalq = temp;
+	akhirq = temp;
+}
+void lists()
+{
+	pasien *temp = new pasien;
+	temp = NULL;
+	awals = temp;
+	akhirs = temp;
+}
+
+void TP()
+{
+	int a;
+	int c;
+	int d;
+	string b;
+	char e;
+	system("cls");
+	cout << "1.Tambah Pasien\n";
+	while(true)
+	{
+		cout << "\n\nNIK : ";
+		cin >> a;
+		cout << "Nama : ";
+		cin >> b;
+		cout << "Usia : ";
+		cin >> c;
+		cout << "Prioritas : ";
+		cin >> d;
+	if(awal == NULL)
+	{
+		pasien *temp = new pasien;
+		temp -> nik = a;
+		temp -> nama = b;
+		temp -> umur = c;
+		temp -> prioritas = d;
+		temp -> next = NULL;
+		awal = temp;
+		akhir = temp;
+	}
+	else
+	{
+		pasien *temp = new pasien;
+		temp -> nik = a;
+		temp -> nama = b;
+		temp -> umur = c;
+		temp -> prioritas = d;
+		if(temp -> prioritas == 1)
+		{
+			temp -> next = awal;
+			awal = temp;
+		}
+		else if(temp -> prioritas >= akhir -> prioritas)
+		{
+			akhir -> next = temp;
+			akhir = akhir -> next;
+			akhir -> next = NULL;
+		}
+		else
+		{
+			pasien *bantu = new pasien;
+			bantu = awal;
+			while(temp -> prioritas < bantu -> prioritas)
+			{
+				bantu = bantu -> next;
+			}
+			temp -> next = bantu -> next;
+			bantu -> next = temp;
+		}
+	}
+	cout << "Tambah Lagi ? ";
+	cin >> e;
+	switch(e)
+	{
+		case 'n':
+		goto wow;
+	}
+}
+wow:
+true;
+}
+
+void PP()
+{
+	if(awalq == NULL)
+	{
+		pasien *temp = new pasien;
+		temp = awal;
+	  awal = awal -> next;
+		temp -> next = NULL;
+		awalq = temp;
+		akhirq = temp;
+	}
+	else
+	{
+		pasien *temp = new pasien;
+		temp = awal;
+  	awal = awal -> next;
+		akhirq -> next = temp;
+		akhirq = akhirq -> next;
+		akhirq -> next = NULL;
+	}
+}
+
+void LQ()
+{
+	int hitung;
+	pasien *cek = new pasien;
+	cek = awalq;
+	hitung = 1;
+	system("cls");
+	cout << setw(10) << "Nama";
+	cout << setw(10) << "NIK";
+	cout << setw(10) << "Usia";
+	cout << setw(20) << "No Antrian" << endl;
+	while(cek != NULL)
+	{
+		cout << setw(10) << cek -> nama;
+		cout << setw(10) << cek -> nik;
+		cout << setw(10) << cek -> umur;
+		cout << setw(20)  << hitung << endl;	
+		cek = cek -> next;
+		hitung++;
+	}
+	system("pause");
+}
+
+void PQ()
+{
+	cout << "Data Terinput\n";
+	if(awalq == NULL)
+	{
+		pasien *temp = new pasien;
+		temp = awalq;
+	  awalq = awalq -> next;
+		temp -> next = NULL;
+		awals = temp;
+		akhirs = temp;
+	}
+	else
+	{
+		pasien *temp = new pasien;
+		temp = awalq;
+	  awalq = awalq -> next;
+		temp -> next = awals;
+		awals = temp;
+	}
+}
+
+void H()
+{
+	int hitung;
+	pasien *cek = new pasien;
+	cek = awals;
+	hitung = 1;
+	system("cls");
+	cout << setw(10) << "Nama";
+	cout << setw(10) << "NIK";
+	cout << setw(10) << "Usia";
+	cout << setw(20) << "No Antrian" << endl;
+	while(cek != NULL)
+	{
+		cout << setw(10) << cek -> nama;
+		cout << setw(10) << cek -> nik;
+		cout << setw(10) << cek -> umur;
+		cout << setw(20)  << hitung << endl;	
+		cek = cek -> next;
+		hitung++;
+	}
+	system("pause");
+}
+
+int main()
+{
+	int a;
+	int hitung;
+	listll();
+	listq();
+	lists();
+	while(true)
+	{
+		system("cls");
+		pasien *cek = new pasien;
+		cek = awal;
+		hitung = 1;
+		cout << setw(10) << "Nama";
+		cout << setw(10) << "NIK";
+		cout << setw(10) << "Usia";
+		cout << setw(20) << "No Antrian" << endl;
+		while(cek != NULL)
+		{
+			cout << setw(10) << cek -> nama;
+			cout << setw(10) << cek -> nik;
+			cout << setw(10) << cek -> umur;
+			cout << setw(20)  << hitung << endl;	
+			cek = cek -> next;
+			hitung++;
+		}
+		cout << "\n1.Tambah Pasien\n";
+		cout << "2.Proses Pasien\n";
+		cout << "3.Lihat Antrian Obat\n";
+		cout << "4.Proses Antrian Obat\n";
+		cout << "5.History\n";
+		cout << "0.Keluar\n";
+		cin >> a;
+		switch(a)
+		{
+			case 1:
+			TP();
+			break;
+			case 2:
+			PP();
+			break;
+			case 3:
+			LQ();
+			break;
+			case 4:
+			PQ();
+			break;
+			case 5:
+			H();
+			break;
+			case 0:
+			return 0;
+		}
+	}
+}
